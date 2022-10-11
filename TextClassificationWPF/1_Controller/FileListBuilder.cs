@@ -1,45 +1,26 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TextClassificationWPF.Domain;
+﻿using System.Collections.Generic;
 using TextClassificationWPF.FileIO;
 
 namespace TextClassificationWPF.Controller
 {
-    public class FileListBuilder:AbstractFileListsBuilder
+    public class FileListBuilder
     {
-        const string AFOLDERNAME = "ClassA";
-        const string BFOLDERNAME = "ClassB";
+        
+        private Dictionary<string, List<string>> _fileLists;
+        private CategoryHandler _fileAdapter;
 
-        private FileLists _fileLists;
-        private FileAdapter _fileAdapter;
-
-        public FileListBuilder()
-        {
-            _fileLists = new FileLists();
-
-            _fileAdapter = new TextFile("txt");
+        public FileListBuilder() {
+            _fileLists = new Dictionary<string, List<string>>();
+            _fileAdapter = new CategoryHandler("txt");
         }
 
-        public override FileLists GetFileLists()
-        {
+        public Dictionary<string, List<string>> GetFileLists() {
             return _fileLists;
         }
 
-        public override void GenerateFileNamesInA()
-        { 
-            List<string> fileNames = _fileAdapter.GetAllFileNames(AFOLDERNAME);
-            _fileLists.SetA(fileNames);
-        }
-
-        public override void GenerateFileNamesInB()
-        {
-            List<string> fileNames = _fileAdapter.GetAllFileNames(BFOLDERNAME);
-            _fileLists.SetB(fileNames);
+        public void GenerateFileNames(string folder) {
+            List<string> fileNames = _fileAdapter.GetAllFileNames(folder);
+            _fileLists.Add(folder, fileNames);
         }
     }
 }

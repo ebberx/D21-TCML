@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-// deprecated (THA)
+﻿// deprecated (THA)
 namespace TextClassificationWPF.Domain
 {
     public class WordItem
@@ -12,14 +6,12 @@ namespace TextClassificationWPF.Domain
         string _word;
         int _occurency;
 
-        public WordItem(string word, int occurency)
-        {
+        public WordItem(string word, int occurency) {
             _word = word;
             _occurency = occurency;
         }
 
-        public string GetWord()
-        {
+        public string GetWord() {
             return _word;
         }
 

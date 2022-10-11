@@ -1,7 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using TextClassificationWPF.Controller;
 using TextClassificationWPF.Domain;
 using TextClassificationWPF.FileIO;
 using TextClassificationWPF.Foundation;
@@ -45,12 +43,14 @@ namespace Test
             string folderA = "ClassA";
             string fileType = "txt";
             List<string> expected = new List<string>();
-            expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\bbcsportsfootball." + fileType);
-            expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\dailymirrornfl." + fileType);
-            expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\sunsportsboxing." + fileType);
-
+            expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\Chiefs baffled by roughing the passer penalty on Chris Jones." + fileType);
+            expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\Josh McDaniels, Raiders 'all-in' on aggressive playcall late." + fileType);
+            expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\Ohio State passes Alabama, Georgia as CFP title betting favorite." + fileType);
+            expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\Ref Chris Jones landed on Derek Carr with full body weight, hence flag." + fileType);
+            expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\Seahawks RB Rashaad Penny sidelined for rest of season." + fileType);
+            
             // act
-            FileAdapter fa = new TextFile(fileType);
+            FileAdapter fa = new CategoryHandler(fileType);
             List<string> actual = fa.GetAllFileNames(folderA);
 
             // assert
@@ -68,7 +68,7 @@ namespace Test
             string expected = StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\filnavn." + fileType;
 
             // act
-            TextFile tf = new TextFile(fileType);
+            CategoryHandler tf = new CategoryHandler(fileType);
             string actual = tf.GetFilePathA(fileName);
 
             // assert

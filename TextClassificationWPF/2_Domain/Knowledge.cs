@@ -1,48 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Windows.Documents;
 
 namespace TextClassificationWPF.Domain
 {
     // composite object - the complete "brain" of the app
     public class Knowledge
     {
-        private FileLists _fileLists;
-        private BagOfWords _bagOfWords;
-        private Vectors _vectors;
+        private Dictionary<string, List<string>>? _fileLists;
+        private BagOfWords? _bagOfWords;
+        private Vectors? _vectors;
 
-        public Knowledge()
-        {
+        public Knowledge() {
 
         }
 
-        public BagOfWords GetBagOfWords()
-        {
+        public BagOfWords GetBagOfWords() {
             return _bagOfWords;
         }
-        public FileLists GetFileLists()
-        {
+        public Dictionary<string, List<string>> GetFileLists() {
             return _fileLists;
         }
 
-        public Vectors GetVectors()
-        {
+        public Vectors GetVectors() {
             return _vectors;
         }
-        public void SetFileLists(FileLists fileLists)
-        {
+        public void SetFileLists(Dictionary<string, List<string>> fileLists) {
             _fileLists = fileLists;
         }
 
-        public void SetBagOfWords(BagOfWords bagOfWords)
-        {
+        public void SetBagOfWords(BagOfWords bagOfWords) {
             _bagOfWords = bagOfWords;
         }
 
-        public void SetVectors(Vectors vectors)
-        {
+        public void SetVectors(Vectors vectors) {
             _vectors = vectors;
         }
 

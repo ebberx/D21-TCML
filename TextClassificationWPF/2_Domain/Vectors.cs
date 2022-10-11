@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TextClassificationWPF.Domain
 {
@@ -12,20 +8,17 @@ namespace TextClassificationWPF.Domain
         private List<List<bool>> _vectorsInA;
         private List<List<bool>> _vectorsInB;
 
-        public Vectors()
-        {
+        public Vectors() {
             _vectorsInA = new List<List<bool>>();
 
             _vectorsInB = new List<List<bool>>();
         }
 
-        public void AddVectorToA(List<bool> vector)
-        {
+        public void AddVectorToA(List<bool> vector) {
             _vectorsInA.Add(vector);
         }
 
-        public void AddVectorToB(List<bool> vector)
-        {
+        public void AddVectorToB(List<bool> vector) {
             _vectorsInB.Add(vector);
         }
     }

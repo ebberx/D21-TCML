@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TextClassificationWPF.Domain;
 
 namespace TextClassificationWPF.Controller
@@ -11,22 +7,18 @@ namespace TextClassificationWPF.Controller
     {
         private Vectors _vectors;
 
-        public VectorsBuilder()
-        {
+        public VectorsBuilder() {
             _vectors = new Vectors();
         }
-        public override void AddVectorToA(List<bool> vector)
-        {
+        public override void AddVectorToA(List<bool> vector) {
             _vectors.AddVectorToA(vector);
         }
 
-        public override void AddVectorToB(List<bool> vector)
-        {
+        public override void AddVectorToB(List<bool> vector) {
             _vectors.AddVectorToB(vector);
         }
 
-        public override Vectors GetVectors()
-        {
+        public override Vectors GetVectors() {
             return _vectors;
         }
     }

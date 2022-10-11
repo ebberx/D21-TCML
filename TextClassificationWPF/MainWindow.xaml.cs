@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Diagnostics;
+using System.Windows;
 using TextClassificationWPF.Controller;
 using TextClassificationWPF.Domain;
 
@@ -18,7 +15,7 @@ namespace TextClassificationWPF
         public MainWindow() {
             InitializeComponent();
 
-            KnowledgeBuilder nb = new KnowledgeBuilder();
+            KnowledgeBuilder nb = new KnowledgeBuilder(new List<string>() { "ClassA", "ClassB" }) ;
 
             // initiate the learning process
             nb.Train();
@@ -35,8 +32,6 @@ namespace TextClassificationWPF
             foreach (string entry in entries) {
                 Debug.WriteLine(entry);
             }
-
-            Console.Read();
         }
     }
 }
