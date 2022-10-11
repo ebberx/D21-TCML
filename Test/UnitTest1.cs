@@ -48,9 +48,9 @@ namespace Test
             expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\Ohio State passes Alabama, Georgia as CFP title betting favorite." + fileType);
             expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\Ref Chris Jones landed on Derek Carr with full body weight, hence flag." + fileType);
             expected.Add(StringOperations.getProjectPath() + "\\Resources\\" + folderA + "\\Seahawks RB Rashaad Penny sidelined for rest of season." + fileType);
-            
+
             // act
-            FileAdapter fa = new CategoryHandler(fileType);
+            CategoryHandler fa = new CategoryHandler(fileType);
             List<string> actual = fa.GetAllFileNames(folderA);
 
             // assert
@@ -69,7 +69,7 @@ namespace Test
 
             // act
             CategoryHandler tf = new CategoryHandler(fileType);
-            string actual = tf.GetFilePathA(fileName);
+            string actual = tf.GetFilePath(folderA, fileName);
 
             // assert
             Assert.AreEqual(expected, actual);

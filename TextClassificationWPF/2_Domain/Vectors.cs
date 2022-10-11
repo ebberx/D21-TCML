@@ -25,5 +25,13 @@ namespace TextClassificationWPF.Domain
             vectorList.Add(vector);
             _vectors[categoryName] = vectorList;
         }
+
+        public List<List<bool>> GetVectorListForCategory(string category) {
+
+            if (!_vectors.ContainsKey(category))
+                throw new DataException("No valid key present in vector dictionary.");
+
+            return _vectors[category];
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Test
             List<string> expected = new List<string>();
             expected.Add("majesty");
             expected.Add("said");
-            expected.Add("there's");
+            expected.Add("there");
             expected.Add("bug");
 
             int i = 0;
@@ -35,7 +35,7 @@ namespace Test
             expected.Add("crikey");
             expected.Add("sir");
             expected.Add("the");
-            expected.Add("tea's");
+            expected.Add("tea");
             expected.Add("getting");
             expected.Add("cold");
 

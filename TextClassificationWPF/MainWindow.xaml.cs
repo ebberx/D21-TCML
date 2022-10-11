@@ -15,7 +15,7 @@ namespace TextClassificationWPF
         public MainWindow() {
             InitializeComponent();
 
-            KnowledgeBuilder nb = new KnowledgeBuilder(new List<string>() { "ClassA", "ClassB" }) ;
+            KnowledgeBuilder nb = new KnowledgeBuilder(new List<string>() { "ClassA", "ClassB" });
 
             // initiate the learning process
             nb.Train();

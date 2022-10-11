@@ -116,11 +116,11 @@ namespace TextClassificationWPF.Controller
                 List<string> wordsInFile = Tokenization.Tokenize(text);
                 tokenCount += wordsInFile.Count;
                 foreach (string word in wordsInFile) {
-                    Debug.WriteLine(word);
+                    //Debug.WriteLine(word);
                     _bagOfWords.InsertEntry(word);
                 }
             }
-            Debug.WriteLine("tokens count: " + tokenCount);
+            //Debug.WriteLine("tokens count: " + tokenCount);
         }
 
         private void AddToVectors(string folderName) {

@@ -12,20 +12,8 @@ namespace TextClassificationWPF.Business
         public static List<string> Tokenize(string originalText) {
             List<string> words = new List<string>();
 
-            foreach (string token in originalText.Split(' ')) {
-
-                // Handle conjoined words
-                if (token.Contains("-")) {
-                    string[] additonalWords = token.Split('-');
-
-                    foreach (string addToken in additonalWords) {
-                        string cleanAddToken = CleanToken(addToken);
-                        if(!IsAShortWord(cleanAddToken))
-                            words.Add(cleanAddToken);
-                    }
-                    continue; // Skip adding conjoined-word token below
-                }
-                
+            foreach (string token in originalText.Split(' ', '-', '\n', '\r', '\'', '\"')) {
+                                            
                 string cleanToken = CleanToken(token);
                 if (!IsAShortWord(cleanToken))
                     words.Add(cleanToken);
@@ -50,7 +38,7 @@ namespace TextClassificationWPF.Business
 
         public static string RemovePunctuation(string token) {
             token = token.Trim();
-            string[] punctuations = { ".", ",", "\"", "?", "\n", "\r", "!", ":", ";", "'", "”", "“"};
+            string[] punctuations = { ".", ",", "\"", "'", "?", "\n", "\r", "!", ":", ";", "”", "“"};
 
             foreach (string s in punctuations) {
                 if (token.Contains(s.ToString())) {
