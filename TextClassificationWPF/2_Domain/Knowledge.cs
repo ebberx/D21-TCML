@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Windows.Documents;
 
 namespace TextClassificationWPF.Domain
@@ -15,13 +16,25 @@ namespace TextClassificationWPF.Domain
         }
 
         public BagOfWords GetBagOfWords() {
+            // Warnings...
+            if (_bagOfWords is null)
+                throw new DataException();
+            
             return _bagOfWords;
         }
         public Dictionary<string, List<string>> GetFileLists() {
+            // Warnings...
+            if (_fileLists is null)
+                throw new DataException();
+
             return _fileLists;
         }
 
         public Vectors GetVectors() {
+            // Warnings...
+            if (_vectors is null)
+                throw new DataException();
+
             return _vectors;
         }
         public void SetFileLists(Dictionary<string, List<string>> fileLists) {

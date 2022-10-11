@@ -50,7 +50,7 @@ namespace TextClassificationWPF.Business
 
         public static string RemovePunctuation(string token) {
             token = token.Trim();
-            string[] punctuations = { ".", ",", "\"", "?", "\n", "\r", "!", ":", ";", "”", "“"};
+            string[] punctuations = { ".", ",", "\"", "?", "\n", "\r", "!", ":", ";", "'", "”", "“"};
 
             foreach (string s in punctuations) {
                 if (token.Contains(s.ToString())) {

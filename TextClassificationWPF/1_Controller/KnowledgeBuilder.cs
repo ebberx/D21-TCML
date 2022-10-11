@@ -63,8 +63,13 @@ namespace TextClassificationWPF.Controller
             }
             _bagOfWords = new BagOfWords();
 
-            AddToBagOfWords("ClassA");
-            AddToBagOfWords("ClassB");
+            // If categoryNames was not set we cannot continue.
+            if (categoryNames is null)
+                throw new ArgumentException();
+
+            // Add all categoryNames to BagOfWords
+            foreach (string s in categoryNames)
+                AddToBagOfWords(s);
 
             _knowledge.SetBagOfWords(_bagOfWords);
         }
@@ -76,12 +81,17 @@ namespace TextClassificationWPF.Controller
             if (_bagOfWords == null) {
                 BuildBagOfWords();
             }
-            _vectors = new Vectors();
-            VectorsBuilder vb = new VectorsBuilder();
-            AddToVectors("ClassA", vb);
-            AddToVectors("ClassB", vb);
 
-            _vectors = vb.GetVectors();
+            // If categoryNames was not set we cannot continue.
+            if (categoryNames is null)
+                throw new ArgumentException();
+
+            _vectors = new Vectors();
+            
+            // Add vectors from categoryNames
+            foreach(string s in categoryNames)
+                AddToVectors(s);
+
             _knowledge.SetVectors(_vectors);
         }
 
@@ -113,12 +123,14 @@ namespace TextClassificationWPF.Controller
             Debug.WriteLine("tokens count: " + tokenCount);
         }
 
-        private void AddToVectors(string folderName, VectorsBuilder vb) {
+        private void AddToVectors(string folderName) {
             List<string>? list;
 
             if (_fileLists is null)
                 throw new ArgumentNullException();
             if (_bagOfWords is null)
+                throw new ArgumentNullException();
+            if (_vectors is null)
                 throw new ArgumentNullException();
 
             _fileLists.TryGetValue(folderName, out list);
@@ -140,12 +152,7 @@ namespace TextClassificationWPF.Controller
                         vector.Add(false);
                     }
                 }
-                if (folderName.Equals("ClassA")) {
-                    vb.AddVectorToA(vector);
-                }
-                else {
-                    vb.AddVectorToB(vector);
-                }
+                _vectors.AddVector(folderName, vector);
             }
         }
 

@@ -1,25 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics.Eventing.Reader;
 
 namespace TextClassificationWPF.Domain
 {
 
     public class Vectors
     {
-        private List<List<bool>> _vectorsInA;
-        private List<List<bool>> _vectorsInB;
+        private Dictionary<string, List<List<bool>>> _vectors;
 
         public Vectors() {
-            _vectorsInA = new List<List<bool>>();
-
-            _vectorsInB = new List<List<bool>>();
+            _vectors = new Dictionary<string, List<List<bool>>>();
         }
 
-        public void AddVectorToA(List<bool> vector) {
-            _vectorsInA.Add(vector);
-        }
+        public void AddVector(string categoryName, List<bool> vector) {
 
-        public void AddVectorToB(List<bool> vector) {
-            _vectorsInB.Add(vector);
+            // If category does not exist in dictionary yet create it
+            if (!_vectors.ContainsKey(categoryName)) {
+                _vectors.Add(categoryName, new List<List<bool>>() { vector });
+                return;
+            }
+
+            List<List<bool>>? vectorList = _vectors[categoryName];
+            vectorList.Add(vector);
+            _vectors[categoryName] = vectorList;
         }
     }
 }
