@@ -6,7 +6,20 @@
         xmlns:local="clr-namespace:TextClassificationWPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <StackPanel Background="Gray">
 
-    </Grid>
+        <Separator Height="20" Background="Gray"></Separator>
+        <TextBox x:Name="textbox" Background="FloralWhite" Height="300" Width="760" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto">Input text here to classify ... </TextBox>
+        <Separator Height="20" Background="Gray"></Separator>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Train" Click="OnClickTrain" Width="100"/>
+            <Separator Width="30" Background="Gray"></Separator>
+            <Button Content="Classify" Click="OnClickClassify" Width="100"/>
+        </StackPanel>
+
+        <Separator Height="10" Background="Gray"></Separator>
+        <Label HorizontalAlignment="Center" x:Name="resultLabel"></Label>
+        
+    </StackPanel>
 </Window>
