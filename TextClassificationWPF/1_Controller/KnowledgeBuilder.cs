@@ -124,7 +124,7 @@ namespace TextClassificationWPF.Controller
         }
 
         private void AddToVectors(string folderName) {
-            List<string>? list;
+            List<string>? fileList;
 
             if (_fileLists is null)
                 throw new ArgumentNullException();
@@ -133,27 +133,30 @@ namespace TextClassificationWPF.Controller
             if (_vectors is null)
                 throw new ArgumentNullException();
 
-            _fileLists.TryGetValue(folderName, out list);
+            _fileLists.TryGetValue(folderName, out fileList);
 
             // Buuuu it is not working
-            if (list is null)
+            if (fileList is null)
                 throw new ArgumentNullException();
 
-            for (int i = 0; i < list.Count; i++) {
-                List<bool> vector = new List<bool>();
-                foreach (string key in _bagOfWords.GetAllWordsInDictionary()) {
-                    string text = File.ReadAllText(list[i]);
-
-                    List<string> wordsInFile = Tokenization.Tokenize(text);
-                    if (wordsInFile.Contains(key)) {
-                        vector.Add(true);
-                    }
-                    else {
-                        vector.Add(false);
-                    }
-                }
-                _vectors.AddVector(folderName, vector);
+            for (int i = 0; i < fileList.Count; i++) {
+                _vectors.AddVector(folderName, CreateVector(File.ReadAllText(fileList[i])));
             }
+        }
+
+        public List<bool> CreateVector(string text) {
+            if (_bagOfWords is null)
+                throw new ArgumentNullException();
+
+            List<bool> vector = new List<bool>();
+            List<string> wordsInFile = Tokenization.Tokenize(text);
+            foreach (string key in _bagOfWords.GetAllWordsInDictionary()) {
+                if (wordsInFile.Contains(key))
+                    vector.Add(true);
+                else
+                    vector.Add(false);
+            }
+            return vector;
         }
 
         public override Knowledge GetKnowledge() {
