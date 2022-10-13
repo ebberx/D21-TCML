@@ -13,7 +13,7 @@ namespace TextClassificationWPF.Business
             List<string> words = new List<string>();
 
             foreach (string token in originalText.Split(' ', '-', '\n', '\r', '\'', '\"')) {
-                                            
+
                 string cleanToken = CleanToken(token);
                 if (!IsAShortWord(cleanToken))
                     words.Add(cleanToken);

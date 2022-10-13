@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Numerics;
 using System.Windows;
 using TextClassificationWPF.Controller;
 using TextClassificationWPF.Domain;
@@ -12,7 +14,7 @@ namespace TextClassificationWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        KnowledgeBuilder nb;
+        KnowledgeBuilder? nb;
 
         public MainWindow() {
             InitializeComponent();
@@ -25,15 +27,79 @@ namespace TextClassificationWPF
         }
 
         private void OnClickClassify(object sender, RoutedEventArgs e) {
-            // getting the (whole) knowledge found in ClassA and in ClassB
-            Knowledge k = nb.GetKnowledge();
+            if(nb is null)
+                return;
 
-            List<string> entries = k.GetBagOfWords().GetEntriesInDictionary();
+            // Create vector of words from input text
+            List<bool> vector = nb.CreateVector(textbox.Text);
 
-            Debug.WriteLine("Showing the list of entries in the BagOfWords (initially with wrong entries) :");
-            foreach (string entry in entries) {
-                Debug.WriteLine(entry);
+            // KNN
+            KNNClassifier classifier = new KNNClassifier(nb.GetKnowledge().GetVectors(), 3);
+            string classification = classifier.Classify(vector);
+
+            resultLabel.Content = "Classified as: " + classification;
+
+        }
+
+        private void OnClickBenchmark(object sender, RoutedEventArgs e) {
+
+            // Error handling
+            if (nb is null) {
+                resultLabel.Content = "Please train model first.";
+                return;
             }
+
+            List<string> categoryNames = new List<string>() { "Benchmark/PoolA", "Benchmark/PoolB"};
+
+            // Read thorugh all files in folders
+            FileListBuilder flb = new FileListBuilder();
+            foreach (string s in categoryNames)
+                flb.GenerateFileNames(s);
+
+            // Get a list of files in each category
+            Dictionary<string, List<string>> filesInCategories = flb.GetFileLists();
+
+            // convert to vectors
+            List<List<bool>> vectors = new List<List<bool>>();
+            List<string> fileCategories = new List<string>();
+
+            foreach (string category in categoryNames) {
+                List<string>? fileList;
+
+                filesInCategories.TryGetValue(category, out fileList);
+                if (fileList is null)
+                    throw new ArgumentNullException();
+
+                foreach (string file in fileList) {
+                    vectors.Add(nb.CreateVector(File.ReadAllText(file)));
+                    fileCategories.Add(category);
+                }
+            }
+
+            // Benchmark classifier
+            KNNClassifier classifier = new KNNClassifier(nb.GetKnowledge().GetVectors(), 3);
+
+            // Classify each vector
+            List<string> classificationOfBenchmark = new List<string>();
+            foreach (List<bool> vector in vectors)
+                classificationOfBenchmark.Add(classifier.Classify(vector));
+
+            // Check results
+            int correctClassifications = 0;
+            for (int i = 0; i < classificationOfBenchmark.Count; i++) {
+                string cat = "";
+                if (fileCategories[i] == "Benchmark/PoolA")
+                    cat = "ClassA";
+                else
+                    cat = "ClassB";
+
+                if (classificationOfBenchmark[i] == cat)
+                    correctClassifications++;
+                Debug.WriteLine("Classification: " + classificationOfBenchmark[i] + " category: " + fileCategories[i]);
+            }
+    
+            // DIsplay results
+            resultLabel.Content = "Benchmark accuracy: " + correctClassifications + "/" + classificationOfBenchmark.Count;
         }
     }
 }

@@ -15,6 +15,8 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Train" Click="OnClickTrain" Width="100"/>
             <Separator Width="30" Background="Gray"></Separator>
+            <Button Content="Benchmark" Click="OnClickBenchmark" Width="100"/>
+            <Separator Width="30" Background="Gray"></Separator>
             <Button Content="Classify" Click="OnClickClassify" Width="100"/>
         </StackPanel>
 

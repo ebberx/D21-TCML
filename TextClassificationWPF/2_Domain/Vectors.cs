@@ -33,5 +33,20 @@ namespace TextClassificationWPF.Domain
 
             return _vectors[category];
         }
+
+        public int GetVectorsCount() {
+            int vectorCount = 0;
+
+            // Count vectors
+            foreach (KeyValuePair<string, List<List<bool>>> vectorsEntry in _vectors)
+                foreach (List<bool> vectorList in vectorsEntry.Value)
+                    vectorCount++;
+
+            return vectorCount;
+        }
+
+        public Dictionary<string, List<List<bool>>> GetVectors() {
+            return _vectors;
+        }
     }
 }

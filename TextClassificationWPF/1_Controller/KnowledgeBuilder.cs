@@ -18,18 +18,22 @@ namespace TextClassificationWPF.Controller
         private BagOfWords? _bagOfWords;
         private Vectors? _vectors;
 
-        private CategoryHandler _fileAdapter;
-
         private List<string>? categoryNames;
 
         public KnowledgeBuilder(List<string> folderNames) {
-            _fileAdapter = new CategoryHandler("txt");
             _knowledge = new Knowledge();
 
             categoryNames = folderNames;
 
             if (categoryNames is null)
                 throw new ArgumentNullException();
+        }
+
+        public List<string> GetCategoryNames() {
+            if (categoryNames is null)
+                throw new ArgumentException("Category names are null.");
+
+            return categoryNames;
         }
 
         public override void Train() {
@@ -105,7 +109,6 @@ namespace TextClassificationWPF.Controller
 
             _fileLists.TryGetValue(folderName, out list);
 
-            // Buuuu it is not working
             if (list is null)
                 throw new ArgumentNullException();
 
@@ -115,12 +118,10 @@ namespace TextClassificationWPF.Controller
 
                 List<string> wordsInFile = Tokenization.Tokenize(text);
                 tokenCount += wordsInFile.Count;
-                foreach (string word in wordsInFile) {
-                    //Debug.WriteLine(word);
+
+                foreach (string word in wordsInFile)
                     _bagOfWords.InsertEntry(word);
-                }
             }
-            //Debug.WriteLine("tokens count: " + tokenCount);
         }
 
         private void AddToVectors(string folderName) {
@@ -135,13 +136,11 @@ namespace TextClassificationWPF.Controller
 
             _fileLists.TryGetValue(folderName, out fileList);
 
-            // Buuuu it is not working
             if (fileList is null)
                 throw new ArgumentNullException();
 
-            for (int i = 0; i < fileList.Count; i++) {
+            for (int i = 0; i < fileList.Count; i++)
                 _vectors.AddVector(folderName, CreateVector(File.ReadAllText(fileList[i])));
-            }
         }
 
         public List<bool> CreateVector(string text) {
